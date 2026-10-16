@@ -1,0 +1,13 @@
+[modengine]
+debug = false
+external_dlls = ["mod/HairGradient/hair_gradient.dll"]
+
+[extension.mod_loader]
+enabled = true
+loose_params = false
+mods = [
+    { enabled = true, name = "Loose file mods", path = "mod" }
+]
+
+[extension.scylla_hide]
+enabled = false

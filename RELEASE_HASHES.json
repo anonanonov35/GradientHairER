@@ -1,0 +1,20 @@
+{
+  "version": "0.3.2",
+  "author": "AnonAnonov",
+  "archive": "HairGradient-0.3.2.zip",
+  "archive_sha256": "a9c924facfe6c36cd7f045642e971bdde79c3d8287851c04055947e138d32cd2",
+  "release_files": {
+    "mod/HairGradient/hair_gradient.dll": "b2c3d255eb1d8272445836e8ce26dfa0435540ee3e0deb53169b1cc716b61a21",
+    "mod/HairGradient/shaders/hair.hgz": "293f1c87b822c93cb764d883bc51a8434cac7ada294a1cd68aa714db70e7e6ca",
+    "mod/HairGradient/shaders/hair_cloth.hgz": "7c1f8a4909a4d36509e4e588da80b62700ff2b013f9ec2445fb1bfc6e1a37c6b"
+  },
+  "runtime_unchanged_from": "0.3.1",
+  "build_flags": [
+    "HAIR_GRADIENT_COMPACT=1",
+    "HAIR_GRADIENT_RUNTIME_MENU=1",
+    "HAIR_GRADIENT_UMA_COMPAT=1"
+  ],
+  "compiler": "Zig 0.13.0",
+  "minhook_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+  "gameplay_retest": false
+}
