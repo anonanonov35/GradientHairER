@@ -1,49 +1,49 @@
-# Hair Gradient 0.3.2
+# Hair Gradient — source 0.3.3
 
-By **AnonAnonov**. Windows x64 cosmetic mod for Elden Ring, loaded by ModEngine 2. Adds a second hair color, gradient softness and gradient position to the appearance editor. Settings are stored per character through the game's normal appearance save path.
+Independent source project for GitHub and DLL review. Unpack this archive and upload its contents as the repository root. This is source code, not an installable mod archive.
 
-This is the public source project for GitHub and support review. Extract this archive and upload its contents as the repository root. No game installation is needed to compile the DLL or run the native tests. The separate `HairGradient-0.3.2.zip` is the playable release with BAT, TOML and two modified shader payloads.
+Adds a second hair color, gradient position and softness to the appearance editor. Works standalone or cooperatively with Uma through UmaAppearanceInterfaceV1, with a guarded legacy fallback. Uma runtime source or DLL is not required to build this project.
 
 ## Build and test
 
-Requirements: Windows x64, PowerShell and **Zig 0.13.0** installed separately. MinHook source and its license are vendored under `third_party/minhook`, pinned to commit `8af6b4acae5a9388fd742b56fa79ece89d96f823` from https://github.com/TsudaKageyu/minhook.
+Windows x64, PowerShell and **Zig 0.13.0** are required. MinHook is vendored at commit `8af6b4acae5a9388fd742b56fa79ece89d96f823`. No game installation, other mod, private build directory or network download is needed for the DLL build and native tests.
 
 ```powershell
-./build.ps1 -ZigExe "path/to/zig.exe" -Test
+./build.ps1 -ZigExe "C:/Tools/zig/zig.exe" -Test
 ```
 
-Output: `out/hair_gradient.dll`. `-Test` also builds and runs six native tests covering settings/storage, legacy menu-row construction, runtime menu/captions, TOML detection, automatic appearance-hook selection and real MinHook chaining on synthetic functions. Tests do not start or modify the game. The legacy menu test remains as development history; the release uses runtime menu injection.
-
-Use the separate mod release for installation instructions. To try a rebuilt DLL, close the game and replace only `mod/HairGradient/hair_gradient.dll` in that release; retain its two shader payloads. Rebuilt files need fresh verification. Binary-identical compiler output across different paths/environments is not claimed. Original release SHA256 hashes are in `RELEASE_HASHES.json`.
+Output: `out/hair_gradient.dll`. Tests use synthetic data and project-authored solver fixtures; they do not launch or modify the game. Build scripts restore previous cache variables and use their own repository directory, including when invoked from another directory.
 
 ## Review map
 
-| Path | Purpose |
-| --- | --- |
-| `src/runtime.cpp` | DLL lifecycle, bounded process-memory access, appearance hooks and shader registration |
-| `src/settings.h` | Character storage layout and packed color/gradient controls |
-| `src/runtime_menu.h`, `src/menu_patch.h` | Runtime menu copies and captions |
-| `src/config_detection.h` | Read-only parsing of the active ModEngine configuration |
-| `src/uma_compat.h`, `src/hook_route.h` | Standalone/UmaEars selection and cooperative hook routing |
-| `src/*guards.h`, `src/hair_bounds.h` | Interface addresses/checksums and measured bounds for 36 stock hairstyles |
-| `shader-tools/` | Original transformations used to modify the user's own shader bundles |
-| `distribution/` | Portable BAT, TOML and INI shipped in the mod release |
-| `tests/` | Native tests, without game code or game fixtures |
+- `src/`: complete project-specific DLL translation units and headers.
+- `compat/eldenring_1_17/`: numeric interface addresses, checksums and measured compatibility metadata; no game executable instructions or decompiled game functions.
+- `third_party/minhook/`, `licenses/`: original dependency source and notices.
+- `tests/`: native tests and synthetic/project-authored fixtures.
+- `distribution/`: default INI and portable loader examples, without loaders or DLLs.
+- `release-manifest.json`: released DLL identity, compiler settings and local rebuild results.
+- `resources-manifest.json`: names, sizes and SHA-256 of separate playable-release files; no resource contents.
+- `verify.py`, `SHA256SUMS.txt`: verify the exported source and optionally compare a release or rebuild.
 
-## Runtime behavior and limits
+`shader-tools/` contains the original Python transformations and portable build wrapper for the two gradient shader families. Their README describes separate private inputs and dependencies. The released HGZ binaries are inventoried but are not included here.
 
-The DLL reads its INI and the configuration identified by `MODENGINE_CONFIG`. It writes a diagnostic log beside the DLL. It hooks only the current game process through MinHook, supplies a presentation copy of menu rows, and replaces initial registration of the Hair/Hair_cloth shader families. The second color and two sliders occupy nine reserved appearance bytes. It does not write the game executable, `regulation.bin` or message containers. It does not download files, install services or send telemetry. Source and dependencies can be inspected before use.
+```powershell
+python verify.py
+python verify.py --dll "path/to/released/hair_gradient.dll"
+python verify.py --rebuilt "out/hair_gradient.dll"
+python verify.py --mod-root "path/to/extracted/playable-release"
+```
 
-Use the existing offline ModEngine 2 route. Gameplay baseline: installed Elden Ring 1.17. Standalone controls/persistence and a cooperative UmaEars baseline were user-confirmed. The final automatic-startup DLL from 0.3.1 was native-tested, without a new complete gameplay test. Version 0.3.2 retains that DLL byte-for-byte and changes packaging/configuration only. 1.17.1, Convergence and rendering on downloaded custom hairstyles remain unverified. There is no executable version-number gate; nine game-interface checks and three conditional UmaEars handler checks remain.
+Python is optional for inspection and uses only its standard library. Rebuild verification compares the entry point and six functional PE sections. Full-file identity is reported separately: linker timestamps, debug identifiers and debug paths can differ. See `release-manifest.json` for the actual result, not a claim of full-file reproduction. A rebuild does not automatically inherit previous gameplay verification.
 
-## Shader source and game resources
+## Scope and behavior
 
-This repository intentionally contains no game-derived shader binaries, original game archives, executable bytes, decompiled game source, saves or third-party hairstyle models. The readable transformation code is supplied in `shader-tools`; see its README for rebuilding from your own three extracted uncompressed `.shaderbdle` inputs. The private extraction tools and original game data are not needed for the DLL build.
+The runtime is designed for the existing offline Elden Ring mod-loader route. Development baseline: Elden Ring 1.17 on Windows x64. It installs in-process hooks, supplies its own menu presentation and updates character appearance. It reads an adjacent INI and writes a diagnostic log. It contains no network client, telemetry uploader, downloader, service installer or unrelated-process injection. Review the source for the complete behavior. This export does not certify compatibility with arbitrary game updates or global mods.
 
-The separate playable release contains only two modified game-derived shader bundles. Rights to underlying game assets remain with their owners. Do not add extracted game data or build output to this source repository; `.gitignore` covers the usual output paths.
+Models, textures, game-derived shader binaries, game archives, saves, binary DLLs, original game code, extracted disassembly and private development history are excluded. The DLL source project is complete within this scope; asset conversion/recreation is a separate task. No repository is created or uploaded automatically.
 
-## License and credits
+## Credits and licensing
 
-Original code, launcher and documentation: MIT, copyright 2026 AnonAnonov. See `LICENSE`. MinHook and Zig-linked components retain their notices in `third_party/minhook/LICENSE.txt` and `licenses/`. See `CREDITS.md` for development references. Created with OpenAI Codex (GPT-6) assistance; no new AI-generated artwork or audio. Unofficial fan mod, not affiliated with FromSoftware or Bandai Namco.
+Direction and game testing: AnonAnonov. Implementation assistance: OpenAI Codex (GPT-6 family). No artwork or audio was generated for this export. MinHook: Tsuda Kageyu and contributors, including HDE by Vyacheslav Patkov. Zig is a separate build dependency. ModEngine2/ME3 are separate loaders. Underlying game content remains with its respective owners.
 
-Support reviewers can compare `RELEASE_HASHES.json` with the playable ZIP, inspect the source, build the DLL and run the included tests. Automated checks do not constitute an antivirus certification or a guarantee of compatibility with another game's build or another mod version.
+Original project code is MIT-licensed by AnonAnonov; see LICENSE. Third-party dependencies retain their notices. See `THIRD_PARTY.md` and `RESOURCES.md`. Publishing source does not grant rights to the separately distributed models or game resources.

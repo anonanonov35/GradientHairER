@@ -27,12 +27,17 @@ static DWORD fake_tick() {return clock_now;}
 static void fake_sleep(DWORD ms) {clock_now+=ms;if(clock_now>=uma_at)install_routes();}
 static UINT fake_ini(LPCWSTR,LPCWSTR,INT,LPCWSTR) {return UINT(required_mode);}
 static HMODULE fake_module(LPCWSTR) {return clock_now>=uma_at?reinterpret_cast<HMODULE>(uma.data()):nullptr;}
+// These synthetic byte arrays are not PE modules managed by the loader.
+// Exercise the legacy branch here; test_gradient_api covers real export lookup.
+static FARPROC fake_proc(HMODULE,LPCSTR) {return nullptr;}
+#define GetProcAddress fake_proc
 #define GetTickCount fake_tick
 #define Sleep fake_sleep
 #define GetPrivateProfileIntW fake_ini
 #define GetModuleHandleW fake_module
 #include "../src/uma_compat.h"
 #undef GetTickCount
+#undef GetProcAddress
 #undef Sleep
 #undef GetPrivateProfileIntW
 #undef GetModuleHandleW
@@ -53,9 +58,9 @@ static void setup(const char* config,DWORD available,int mode=-1) {
     auto nt=reinterpret_cast<IMAGE_NT_HEADERS64*>(uma.data()+128);
     nt->Signature=IMAGE_NT_SIGNATURE;nt->FileHeader.Machine=IMAGE_FILE_MACHINE_AMD64;
     nt->OptionalHeader.Magic=IMAGE_NT_OPTIONAL_HDR64_MAGIC;nt->OptionalHeader.SizeOfImage=unsigned(uma.size());
-    auto f=std::fopen("gradient-hair/build/detection-fixture.toml","wb");assert(f);
+    auto f=std::fopen("out/test-fixtures/detection-fixture.toml","wb");assert(f);
     assert(std::fwrite(config,1,std::strlen(config),f)==std::strlen(config));std::fclose(f);
-    assert(SetEnvironmentVariableW(L"MODENGINE_CONFIG",L"gradient-hair/build/detection-fixture.toml"));
+    assert(SetEnvironmentVariableW(L"MODENGINE_CONFIG",L"out/test-fixtures/detection-fixture.toml"));
     if(!available)install_routes();
 }
 int main() {

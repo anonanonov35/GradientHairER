@@ -1,0 +1,113 @@
+{
+  "project": "HairGradient",
+  "version": "0.3.3",
+  "source_export_date": "2026-10-29",
+  "compiler": "Zig 0.13.0",
+  "target": "x86_64-windows-gnu",
+  "game_baseline": "Elden Ring 1.17",
+  "minhook_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+  "released_runtime": {
+    "filename": "hair_gradient.dll",
+    "sha256": "0f14209cd992e8dd32372d8bfb575a6f0e1930cff4333c1581ae377f2dabb650",
+    "bytes": 406016,
+    "pe": {
+      "sha256": "0f14209cd992e8dd32372d8bfb575a6f0e1930cff4333c1581ae377f2dabb650",
+      "entry_point": 35152,
+      "sections": {
+        ".text": {
+          "rva": 4096,
+          "virtual_size": 319734,
+          "raw_size": 320000,
+          "sha256": "3836dd6065a8e9cedc6b15e4a5d01b9f16e32ca12e7eb6f984c81c49c417ceda"
+        },
+        ".rdata": {
+          "rva": 327680,
+          "virtual_size": 66120,
+          "raw_size": 66560,
+          "sha256": "df1edfa60bfa8eb5659e489f2401b62bce51e2488c0adfbcb6d5db242a9ece4c"
+        },
+        ".buildid": {
+          "rva": 397312,
+          "virtual_size": 70,
+          "raw_size": 512,
+          "sha256": "d3d19ba5838cef598a234dd4c76dc1cba38a391161bbbfefabd0fba58e86720f"
+        },
+        ".data": {
+          "rva": 401408,
+          "virtual_size": 8768,
+          "raw_size": 1536,
+          "sha256": "4d6ef946de2f996e60bd2847406159702012d1563d8fd18f3173427652196c6b"
+        },
+        ".pdata": {
+          "rva": 413696,
+          "virtual_size": 9648,
+          "raw_size": 9728,
+          "sha256": "5016cc6cbf4f2f92acd070473431eae55fb870117c8da1975d7c39e9a91d1ae3"
+        },
+        ".tls": {
+          "rva": 425984,
+          "virtual_size": 16,
+          "raw_size": 512,
+          "sha256": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560"
+        },
+        ".reloc": {
+          "rva": 430080,
+          "virtual_size": 3544,
+          "raw_size": 3584,
+          "sha256": "58353ea9c417d4e7d9b2b0a7cc364d52144b5c4d2fdc19a4f92b41db314ebaae"
+        },
+        "/4": {
+          "rva": 434176,
+          "virtual_size": 33,
+          "raw_size": 512,
+          "sha256": "2bb2e74f39a58d80734b818e8708a192ec9fdfe0f58d010db4bd03eea677d6b4"
+        },
+        "/18": {
+          "rva": 438272,
+          "virtual_size": 48,
+          "raw_size": 512,
+          "sha256": "8aa136ce0c9128a9cc29e000de2ec32f2d97427774a3876b3081b24db090e366"
+        },
+        "/33": {
+          "rva": 442368,
+          "virtual_size": 446,
+          "raw_size": 512,
+          "sha256": "51c692449d9c9cb996fd164051e716c269dc05d0d2f3f01501e2e363a85c451c"
+        },
+        "/45": {
+          "rva": 446464,
+          "virtual_size": 288,
+          "raw_size": 512,
+          "sha256": "81dd75f8db753acf0072b34e7f7673e091b7ce39863844170dd629761cc5e036"
+        }
+      }
+    }
+  },
+  "source_only": true,
+  "game_resources_included": false,
+  "local_build_verification": {
+    "exit_code": 0,
+    "tests_passed": [
+      "settings_test",
+      "menu_patch_test",
+      "runtime_menu_test",
+      "config_detection_test",
+      "appearance_selection_test",
+      "hook_chain_test",
+      "test_gradient_api"
+    ],
+    "tail_skin_scenarios": [],
+    "rebuilt_sha256": "d7ea6da5157da89b4559cdc734d4e75020445934d5627031a4a17bbe1352ce0d",
+    "full_file_exact": false,
+    "core_sections_exact": {
+      ".text": true,
+      ".rdata": true,
+      ".data": true,
+      ".pdata": true,
+      ".tls": true,
+      ".reloc": true
+    },
+    "entry_point_exact": true,
+    "game_started": false
+  }
+}

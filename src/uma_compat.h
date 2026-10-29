@@ -5,6 +5,8 @@
 
 struct AppearanceTargets { uint8_t* get; uint8_t* set; uint8_t* apply; bool uma; };
 
+#include "appearance_v1.h"
+
 static bool configured_uma() {
     // The official ModEngine launcher passes its selected config in this
     // environment variable before loading external DLLs. Read it, never edit it.
@@ -62,6 +64,8 @@ static bool choose_appearance_targets(uint8_t* base,unsigned image_size,Appearan
     }
     auto uma_base=reinterpret_cast<uint8_t*>(uma);
     auto uma_size=image_size_of(uma_base);
+    if(GetProcAddress(uma,"UmaAppearanceInterfaceV1"))
+        return choose_uma_v1(base,uma_base,uma_size,targets);
     if(!matches_interface(uma_base,uma_size,uma_get_rva,uma_get_guard)||
        !matches_interface(uma_base,uma_size,uma_set_rva,uma_set_guard)||
        !matches_interface(uma_base,uma_size,uma_apply_rva,uma_apply_guard)) {

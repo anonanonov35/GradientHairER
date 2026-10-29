@@ -1,0 +1,29 @@
+{
+  "version": "0.3.3",
+  "path_base": "separate extracted playable release root",
+  "hash_algorithm": "SHA-256",
+  "contents_included": false,
+  "resource_files": 2,
+  "files": [
+    {
+      "path": "mod/HairGradient/shaders/hair.hgz",
+      "bytes": 692290,
+      "sha256": "293f1c87b822c93cb764d883bc51a8434cac7ada294a1cd68aa714db70e7e6ca"
+    },
+    {
+      "path": "mod/HairGradient/shaders/hair_cloth.hgz",
+      "bytes": 716792,
+      "sha256": "7c1f8a4909a4d36509e4e588da80b62700ff2b013f9ec2445fb1bfc6e1a37c6b"
+    },
+    {
+      "path": "mod/HairGradient/hair_gradient.dll",
+      "bytes": 406016,
+      "sha256": "0f14209cd992e8dd32372d8bfb575a6f0e1930cff4333c1581ae377f2dabb650"
+    },
+    {
+      "path": "mod/HairGradient/hair-gradient.ini",
+      "bytes": 147,
+      "sha256": "01cafeb9a5e03a1ed83154dc0d9b616569d4f8c8202f6afa2003fefeb854eee3"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "HairGradient",
+  "version": "0.3.3",
+  "dll": "hair_gradient.dll",
+  "config": "distribution/hair-gradient.ini",
+  "translation_units": [
+    "src/runtime.cpp"
+  ],
+  "defines": [
+    "HAIR_GRADIENT_COMPACT=1",
+    "HAIR_GRADIENT_RUNTIME_MENU=1",
+    "HAIR_GRADIENT_UMA_COMPAT=1"
+  ],
+  "tests": [
+    "settings_test",
+    "menu_patch_test",
+    "runtime_menu_test",
+    "config_detection_test",
+    "appearance_selection_test",
+    "hook_chain_test",
+    "test_gradient_api"
+  ],
+  "tail_skin_harness": false
+}
